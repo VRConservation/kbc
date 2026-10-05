@@ -1,0 +1,38 @@
+/* Define group colors as variables for reuse */
+:root {
+  --color-charter:     #cce5ff;
+  --color-data:        #ccf5d6;
+  --color-wob:         #fffacc;
+  --color-other:       #e5ccff;
+  --color-card-link:  #005f55;
+  --color-card-link-hover: #00443a;
+}
+
+/* Dark scheme: same hues, darkened so light text and currentColor icons stay legible */
+[data-md-color-scheme="slate"] {
+  --color-charter:     #1e3550;
+  --color-data:        #1a4030;
+  --color-wob:         #45401a;
+  --color-other:       #362a52;
+}
+
+/* Topic section cards — all same color per group */
+.grid.cards.group-charter > ul > li { background-color: var(--color-charter); }
+.grid.cards.group-data    > ul > li { background-color: var(--color-data); }
+.grid.cards.group-wob     > ul > li { background-color: var(--color-wob); }
+.grid.cards.group-other   > ul > li { background-color: var(--color-other); }
+
+/* Card icons inherit currentColor; keep them clearly visible in both schemes */
+.md-typeset .grid.cards > ul > li .twemoji svg { fill: currentColor; }
+
+/* The default teal only reaches 2.6-3.6:1 on the pale light-scheme cards, so darken it.
+   In slate the theme's own teal already clears 4.5:1 on the dark cards, so it is left alone. */
+.md-typeset .grid.cards > ul > li a,
+.md-typeset .grid.cards > ul > li a:visited {
+  color: var(--color-card-link);
+}
+
+.md-typeset .grid.cards > ul > li a:hover,
+.md-typeset .grid.cards > ul > li a:focus {
+  color: var(--color-card-link-hover);
+}
