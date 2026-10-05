@@ -1,9 +1,3 @@
-# Alias
-
-`ingest kbc` runs this knowledge base from the terminal. It goes to the `~/1-projects/HELP/kb_charter/base` vault, ingests the new files, and spins them up to the mkdocs site.
-
-Plain `ingest` (no argument) runs the Obsidian Clippings vault at `~/3-resources/Obsidian/Clippings`. `ingest clips` does the same explicitly. Both are defined in `~/.zshrc`, and each vault carries its own `AGENTS.md` telling opencode what to do.
-
 # HELP Knowledge-Base Charter (KBC)
 
 A searchable personal knowledge base generated from an [Obsidian](https://obsidian.md/)
@@ -63,3 +57,15 @@ mkdocs build
 ## Deploying
 
 Push to `main`; `.github/workflows/deploy.yml` builds the site with MkDocs and deploys it to GitHub Pages. GitHub Pages is already set to **Settings → Pages → Build and deployment → Source → GitHub Actions** for this repo. The live site is https://3point.xyz/kbc.
+
+## Terminal commands (this PC only)
+
+These aliases live in `~/.zshrc` and are local to this machine — nothing here is needed to build or read the site. See the `## Commands` section of `AGENTS.md` for the same table.
+
+| Command | Runs in |
+| --- | --- |
+| `ingest kbc` | `~/1-projects/HELP/kb_charter/base` — this vault |
+| `ingest` or `ingest clips` | `~/3-resources/Obsidian/Clippings` — the Obsidian Clippings vault |
+| `ingest -h` | Show usage |
+
+Each vault carries its own `AGENTS.md`, so both run `opencode run --auto 'ingest'` in their folder; only the folder differs.
