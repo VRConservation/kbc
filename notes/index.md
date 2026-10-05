@@ -11,7 +11,8 @@ A searchable website built from this [Obsidian](https://obsidian.md/) vault. New
 
 ## Latest Finds
 
-*Nothing ingested yet. Drop a note into the vault root, then run `ingest kbc`.*
+- **[Governance](Governance.md)** — the "UMWRA+" proposal: a JPA plus program manager for a new regional partnership.
+- **[Baseline](Baseline.md)** — the founding HELP 10-Year Plan (2023), with the TCSI pillars crosswalk and phased action plan.
 
 ## Topics
 
@@ -22,6 +23,8 @@ A searchable website built from this [Obsidian](https://obsidian.md/) vault. New
 - :material-history: **[Baseline](Baseline.md)**
 
 - :material-file-document-outline: **[Charter](Charter.md)**
+
+- :material-account-group-outline: **[Governance](Governance.md)**
 
 </div>
 
