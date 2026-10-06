@@ -40,14 +40,16 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
-hooks:
-  - hooks.py
-
 plugins:
   - search
-  - roamlinks
 
 markdown_extensions:
+  - wikilinks:
+      # Zensical has no roamlinks plugin. Emit document paths (`Foo.md`) rather
+      # than the default base_url `/` so links resolve relative to the page —
+      # absolute hrefs would 404 on a GitHub project page served under /kbc/.
+      base_url: ''
+      end_url: .md
   - tables
   - attr_list
   - md_in_html

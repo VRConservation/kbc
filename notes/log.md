@@ -1,9 +1,10 @@
 # Log
 
 **Summary**: Append-only record of all ingestion operations.
-**Last updated**: 10-05-2026.
+**Last updated**: 10-06-2026.
 
 ---
 
 - 2026-10-05: Set up the knowledge base. Created `mkdocs.yml`, `hooks.py`, `requirements.txt` and `.github/workflows/deploy.yml`; created the first topic pages Baseline, Charter, Data, WOB and Misc; added the `ingest kbc` terminal command. Nothing ingested yet.
 - 2026-10-05: Ingested 2 files. `help next structure approach.md` (tags: governance) → new topic page [[Governance]] with the "UMWRA+" regional partnership proposal (JPA + program manager holding the USFS master agreement); `strategy.md` (tags: foundation) → [[Baseline]] as the founding HELP 10-Year Plan, with its data-management phase cross-referenced from [[Data]]. Updated `notes/index.md` (Governance card, Latest Finds) and the `mkdocs.yml` nav; moved both originals to `processed/`.
+- 2026-10-06: Migrated the build from MkDocs 1.6.1 to Zensical (0.0.68), which the MkDocs Material team now recommend because MkDocs 1.x is frozen and MkDocs 2.0 drops plugins and theming entirely. Dropped the `roamlinks` plugin — Zensical has no equivalent and silently ignores it — in favour of Python-Markdown's built-in `wikilinks` extension, configured with `base_url: ''` and `end_url: .md` so links are emitted as document paths and resolved relative to the page; the defaults produce absolute `/Foo/` hrefs that would 404 on a project page served under `/kbc/`. Replaced `hooks.py` with `build.py`, since Zensical has no `hooks:` support: it still regenerates `Catalog.md` and injects the per-page note counts into the nav, but patches the `nav:` block as text because a PyYAML round-trip of `mkdocs.yml` destroys the `!!python/name:` tags on the emoji extensions. Changed the two alias links in [[index]] from `[[log|Log]]` / `[[Catalog|Catalog]]` to `[[log]]` / `[[Catalog]]` — the extension's regex excludes the pipe, so the aliases rendered as literal `[[...]]` on the home page; the side effect is that "log" now renders lowercase. Verified against the old MkDocs build: same 10 pages, identical sidebar nav, 0 broken internal links across 162 checked, and a clean build from a fresh venv on `requirements.txt`. Also rewrote the MkDocs references in `README.md` and `AGENTS.md`.

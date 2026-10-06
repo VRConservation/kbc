@@ -5,7 +5,8 @@ vault of clipped notes and bookmarks. New items are added to the ~/kb_charter/ba
 files it into the right topic page in `notes/`. Published automatically to
 GitHub Pages on every push to `main`.
 
-The site uses an [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) layout styled after [spatialthoughts/notes](https://spatialthoughts.github.io/notes/),
+The site is built with [Zensical](https://zensical.org/) (the successor to MkDocs,
+built by the same team as Material for MkDocs) using the Material theme, styled after [spatialthoughts/notes](https://spatialthoughts.github.io/notes/),
 with a grid-cards home page grouped by theme.
 
 ## Live site
@@ -17,14 +18,14 @@ with a grid-cards home page grouped by theme.
 
 | File / folder                  | Purpose                                                                                                                                    |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `notes/`                       | The vault's published topic pages — this is the MkDocs `docs_dir` and also a normal folder of Markdown files, so it works in Obsidian too. |
+| `notes/`                       | The vault's published topic pages — this is the site's `docs_dir` and also a normal folder of Markdown files, so it works in Obsidian too. |
 | `notes/index.md`               | Grid-cards table of contents + "Latest Finds" highlights, shown as the site's home page.                                                   |
 | `notes/log.md`                 | Append-only changelog of ingestion operations.                                                                                             |
 | `notes/Catalog.md` | Auto-generated inventory of all topic pages and note counts (do not edit by hand; rebuilt on every build and gitignored). |
 | `processed/` | Notes that have been ingested into `notes/` (gitignored, stays local, never pushed). |
 | `AGENTS.md` | Instructions opencode follows to process files from the repo root into topic pages in `notes/`, and to keep the site in sync. |
 | `mkdocs.yml` | Site configuration — theme, navigation, plugins. |
-| `hooks.py` | Auto-generates `Catalog.md` and adds a live note-count, e.g. `WOB (4)`, next to each topic in the site navigation. |
+| `build.py` | Pre-build step Zensical can't do itself: regenerates `Catalog.md`, adds a live note-count e.g. `WOB (4)` next to each topic in the navigation, writes `mkdocs.generated.yml`, then runs the build. Use `python build.py --serve` to preview. |
 | `requirements.txt` | Pinned Python packages needed to build the site. |
 | `.gitignore` | Keeps `processed/`, `site/`, `.venv/` and the generated `notes/Catalog.md` out of the repo. |
 | `.github/workflows/deploy.yml` | GitHub Actions workflow that builds and deploys the site to GitHub Pages on every push to `main`. |
@@ -34,7 +35,7 @@ with a grid-cards home page grouped by theme.
 
 Each file is a Markdown file with YAML frontmatter, including a `tags`
 field. The `tags` field drives the organization — each tag maps to a topic page
-in `notes/`. See `notes/index.md` for the current list of topics. If the file does not have YAML frontmatter a tag with # will be added to indicate which part of mkdocs to go to.
+in `notes/`. See `notes/index.md` for the current list of topics. If the file does not have YAML frontmatter a tag with # will be added to indicate which topic page it belongs to.
 
 ## Adding notes
 
@@ -45,18 +46,21 @@ Drop a new file into the ~/base folder, then run `ingest kbc` (or just ask openc
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-mkdocs serve
+python build.py --serve
 ```
 
-Open `http://127.0.0.1:8000` to preview. To build a static copy:
+Open `http://127.0.0.1:8000` to preview. To build a static copy into `site/`:
 
 ```bash
-mkdocs build
+python build.py
 ```
+
+`build.py` must be used rather than calling `zensical` directly — it regenerates
+`notes/Catalog.md` and bakes the nav note counts into `mkdocs.generated.yml`.
 
 ## Deploying
 
-Push to `main`; `.github/workflows/deploy.yml` builds the site with MkDocs and deploys it to GitHub Pages. GitHub Pages is already set to **Settings → Pages → Build and deployment → Source → GitHub Actions** for this repo. The live site is https://3point.xyz/kbc.
+Push to `main`; `.github/workflows/deploy.yml` runs `python build.py` and deploys the site to GitHub Pages. GitHub Pages is already set to **Settings → Pages → Build and deployment → Source → GitHub Actions** for this repo. The live site is https://3point.xyz/kbc.
 
 ## Terminal commands (this PC only)
 

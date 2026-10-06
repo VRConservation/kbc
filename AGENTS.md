@@ -1,9 +1,9 @@
-# Instructions for Organizing and Updating base to mkdocs
+# Instructions for Organizing and Updating base
 
 ## Overview
 This is a knowledge base for the HELP charter and is based on documents placed in the following folder: ~/1-projects/HELP/kb_charter/base. 
 
-Open it in Obsidian directly, and it also builds and publishes as a MkDocs site on GitHub Pages.
+Open it in Obsidian directly, and it also builds and publishes as a Zensical site on GitHub Pages.
 
 The github repo for this knowledge base is at https://github.com/VRConservation/kbc the website is https://3point.xyz/kbc
 
@@ -28,10 +28,10 @@ Defined in `~/.zshrc`; each vault has its own `AGENTS.md`, so the prompt is just
 ```
 - (repo root)        -- Obsidian vault + new files folder at ~/1-projects/HELP/kb_charter/base; new clipped .md files land here
 - processed/         -- ingested files moved here after processing (gitignored, stays local, never pushed)
-- notes/             -- markdown pages for the organized topic notes; also the MkDocs docs_dir
+- notes/             -- markdown pages for the organized topic notes; also the site docs_dir
 - notes/index.md     -- table of contents of all the notes pages + "Latest Finds"
 - notes/log.md       -- append-only record of all operations
-- notes/Catalog.md   -- auto-generated inventory of all topic pages (do not edit by hand; rebuilt by hooks.py on every build and gitignored)
+- notes/Catalog.md   -- auto-generated inventory of all topic pages (do not edit by hand; rebuilt by build.py on every build and gitignored)
 - notes/stylesheets/extra.css -- card colors for the grid-cards home page
 ```
 
@@ -42,7 +42,7 @@ Always `git pull` to fetch the latest changes from GitHub first.
 - Look at all `.md` files in the repo root (base).
 - Process each file and all notes inside using the processing instructions below.
 - Once processed, move the original file to the `processed/` folder (gitignored). Note: the clipping is ingested into `notes/` as brief, searchable topic entries; the full source clipping stays in `processed/` for reference.
-- **MkDocs constraint**: `notes/` is the MkDocs `docs_dir`. Any `.md` file linked from a topic page (e.g. a long bibliography or source document) must also live inside `notes/` for the link to resolve on the published site. If a clipping's content is linked rather than summarized inline, copy the file into `notes/` before moving the original to `processed/`.
+- **Site constraint**: `notes/` is the site's `docs_dir`. Any `.md` file linked from a topic page (e.g. a long bibliography or source document) must also live inside `notes/` for the link to resolve on the published site. If a clipping's content is linked rather than summarized inline, copy the file into `notes/` before moving the original to `processed/`.
 
 ## Processing Instructions
 
@@ -68,7 +68,7 @@ When the user adds a new `.md` file to the repo root and asks you to ingest it:
 
 ## Update the Website
 
-This folder is published as a MkDocs site on GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml` already exists). After ingesting new notes:
+This folder is published as a Zensical site on GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml` already exists, and runs `python build.py`). After ingesting new notes:
 
 - Update the "Latest Finds" section in `notes/index.md` with the 5 most recently added notes, each from a different topic page. Don't pick these from Misc.
 - Add any new topic page to the `nav` in `mkdocs.yml` and to the grid cards in `notes/index.md`, otherwise it will build but not appear in the site navigation.
